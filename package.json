@@ -1,0 +1,79 @@
+{
+  "name": "@alexdrel/pralinejs",
+  "version": "0.1.0",
+  "license": "MIT",
+  "author": "Alex Drel",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexdrel/pralinejs.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module",
+  "imports": {
+    "#praline-types": "./src/lib/types.ts"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/types/lib/index.d.ts",
+      "import": "./dist/lib.js"
+    },
+    "./compiler": {
+      "types": "./dist/types/compiler/index.d.ts",
+      "import": "./dist/compiler.js"
+    },
+    "./vite": {
+      "types": "./dist/types/vite/index.d.ts",
+      "import": "./dist/vite.js"
+    }
+  },
+  "bin": {
+    "praline": "./dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "src/lib/types.ts",
+    "README.md"
+  ],
+  "description": "Build component-based UIs with vanilla JavaScript. Eliminate DOM plumbing by connecting ordinary HTML to typed element references and handlers, while retaining direct control of the DOM.",
+  "engines": {
+    "node": ">=26"
+  },
+  "scripts": {
+    "build": "vite build --config vite.lib.config.ts && vite build --config vite.tooling.config.ts && npm run build:types",
+    "build:types": "tsc -p tsconfig.build.json",
+    "prepack": "npm run build",
+    "check": "tsc",
+    "precheck": "npm run build:types && npm run examples:generate",
+    "examples:generate": "node src/cli/praline.ts --emit dts examples --exclude index.html",
+    "praline": "node src/cli/praline.ts",
+    "praline:built": "node dist/cli.js",
+    "test:unit": "node --test src examples",
+    "lint": "oxlint --deny-warnings .",
+    "fmt": "oxfmt",
+    "fmt:check": "oxfmt --check",
+    "test": "npm run build && npm run check && npm run lint && npm run fmt:check && npm run test:unit"
+  },
+  "dependencies": {
+    "@alexdrel/jsonml-ts": "^0.6.0",
+    "parse5": "^8.0.1"
+  },
+  "peerDependencies": {
+    "vite": "^8.3.4"
+  },
+  "peerDependenciesMeta": {
+    "vite": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@alexdrel/perky": "^0.2.0",
+    "@types/node": "^26.6.5",
+    "happy-dom": "^21.0.4",
+    "oxfmt": "^0.73.0",
+    "oxlint": "^1.87.0",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.4"
+  }
+}

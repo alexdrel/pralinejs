@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ES2024",
+    "lib": ["ES2024", "ESNext.Iterator", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "types": ["node", "vite/client"]
+  },
+  "include": ["src/**/*.ts", "examples/**/*.ts", "vite.lib.config.ts", "vite.tooling.config.ts"],
+  "exclude": ["dist", "examples/*/build", "node_modules", "examples/*/node_modules"]
+}

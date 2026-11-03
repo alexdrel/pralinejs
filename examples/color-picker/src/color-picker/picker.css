@@ -1,0 +1,134 @@
+.color-picker {
+  color: #302e2a;
+  font:
+    1rem/1.5 system-ui,
+    sans-serif;
+  background: #fffefa;
+  border: 1px solid #d9d4cb;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 8px 24px #302e2a08;
+  height: 100%;
+
+  &,
+  * {
+    box-sizing: border-box;
+  }
+
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  h2 {
+    font-size: 1.1rem;
+    margin: 0;
+  }
+
+  select,
+  input {
+    font: inherit;
+    color: inherit;
+  }
+
+  select {
+    background: #f6f3ee;
+    border: 1px solid #d9d4cb;
+    border-radius: 0.5rem;
+    padding: 0.4rem 0.6rem;
+  }
+
+  .channel {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 5.5rem;
+    gap: 1rem;
+    align-items: end;
+    margin-bottom: 1.25rem;
+
+    label > span:first-child {
+      display: block;
+      font-size: 0.85rem;
+    }
+    input[type="range"] {
+      display: block;
+      width: 100%;
+      margin: 0.65rem 0 0.35rem;
+      accent-color: #655a4d;
+    }
+  }
+
+  .channel-value {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+    min-width: 0;
+    padding-bottom: 0.1rem;
+    input {
+      width: 4.5rem;
+      padding: 0.35rem;
+      border: 1px solid #d9d4cb;
+      border-radius: 0.4rem;
+      background: white;
+    }
+    > span {
+      font-size: 0.8rem;
+    }
+  }
+
+  .color-values {
+    display: grid;
+    grid-template-columns: 8.5rem minmax(0, 1fr);
+    gap: 0.75rem;
+    margin-top: 2rem;
+    font-size: 0.85rem;
+  }
+  .hex-field {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    margin-top: 0.5rem;
+  }
+  .swatch {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.5rem;
+    border: 1px solid #302e2a30;
+    flex: none;
+  }
+  .hex-field input {
+    min-width: 0;
+    width: 100%;
+    height: 2rem;
+    padding: 0.25rem 0.4rem;
+    border: 1px solid #d9d4cb;
+    border-radius: 0.5rem;
+    background: white;
+    font-family: ui-monospace, monospace;
+  }
+  .css-value {
+    min-width: 0;
+    code {
+      display: block;
+      margin-top: 0.5rem;
+      line-height: 2rem;
+      font-size: 0.7rem;
+      white-space: nowrap;
+      overflow-x: auto;
+    }
+  }
+  :focus-visible {
+    outline: 3px solid #236b62;
+    outline-offset: 3px;
+  }
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}

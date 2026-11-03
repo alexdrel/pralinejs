@@ -1,0 +1,55 @@
+.color-map {
+  &,
+  * {
+    box-sizing: border-box;
+  }
+
+  .map-surface {
+    position: relative;
+    width: min(100%, 17rem);
+    aspect-ratio: 1;
+    margin: 0 auto;
+  }
+  .hue-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: conic-gradient(red, yellow, lime, cyan, blue, magenta, red);
+    touch-action: none;
+    cursor: crosshair;
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 12%;
+      border-radius: 50%;
+      background: #fffefa;
+    }
+  }
+  .color-plane {
+    position: absolute;
+    inset: 24%;
+    background-image: linear-gradient(to top, black, transparent), linear-gradient(to right, white, transparent);
+    border-radius: 0.3rem;
+    touch-action: none;
+    cursor: crosshair;
+    box-shadow: 0 0 0 1px #302e2a15;
+  }
+  .marker {
+    position: absolute;
+    width: 0.85rem;
+    height: 0.85rem;
+    border: 2px solid white;
+    box-shadow:
+      0 0 0 1px #0009,
+      0 1px 3px #0005;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+  .map-hint {
+    margin: 0.9rem 0 1.5rem;
+    text-align: center;
+    font-size: 0.7rem;
+    color: #686258;
+  }
+}

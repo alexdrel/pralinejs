@@ -1,0 +1,39 @@
+<div class="color-picker">
+  <header>
+    <h2>Color picker</h2>
+    <select ref="{{space}}" onChange="{{changeSpace}}" title="Color space">
+      <option value="rgb">RGB</option>
+      <option value="hsl">HSL</option>
+      <option value="hwb">HWB</option>
+    </select>
+  </header>
+  <div ref="{{map}}"></div>
+  <div class="channels">
+    <template ref="{{channels}}">
+      <div class="channel">
+        <label>
+          <span ref="{{label}}"></span>
+          <input ref="{{slider}}" type="range" min="0" step="1" data-channel="{{channel}}" onInput="{{changeChannel}}" />
+        </label>
+        <label class="channel-value">
+          <span ref="{{numberLabel}}" class="visually-hidden"></span>
+          <input ref="{{number}}" type="number" min="0" step="1" data-channel="{{channel}}" onInput="{{changeChannel}}" required />
+          <span ref="{{unit}}"></span>
+        </label>
+      </div>
+    </template>
+  </div>
+  <div class="color-values">
+    <label>
+      <span>Hex color</span>
+      <span class="hex-field">
+        <span ref="{{swatch}}" class="swatch"></span>
+        <input ref="{{hex}}" onChange="{{changeHex}}" pattern="#[0-9a-fA-F]{6}" maxlength="7" spellcheck="false" required />
+      </span>
+    </label>
+    <div class="css-value">
+      <span>CSS color</span>
+      <code ref="{{css}}"></code>
+    </div>
+  </div>
+</div>

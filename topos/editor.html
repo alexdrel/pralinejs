@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Topos Editor - Praline</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Mono&family=Inter:wght@400;500;600&family=Playpen+Sans:wght@400;600&family=Roboto+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.061/juliamono.css" />
+    <link rel="stylesheet" href="./editor/css/editor.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header id="topbar" class="topbar"></header>
+
+      <main class="workspace">
+        <section class="surface-panel">
+          <div id="surface-toolbar-mount" class="surface-head"></div>
+          <div id="surface-stack" class="surface-stack"></div>
+        </section>
+
+        <div id="workspace-splitter" class="panel-splitter panel-splitter-vertical" aria-hidden="true"></div>
+
+        <section class="side-panel">
+          <div id="glyph-section" class="pane-section hidden"></div>
+          <div id="inspector-section" class="pane-section"></div>
+          <div id="legend-section" class="pane-section"></div>
+          <div id="enamel-section" class="pane-section"></div>
+        </section>
+      </main>
+    </div>
+
+    <script type="module" src="./editor/app.ts"></script>
+  </body>
+</html>

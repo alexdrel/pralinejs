@@ -1,0 +1,45 @@
+@scope (.glyphs) {
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(22px, 22px));
+    gap: 3px;
+    padding: 2px 0 4px 8px;
+    border-bottom: none;
+  }
+
+  .item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    font-family: var(--editor-font), monospace;
+    font-size: 13px;
+    padding: 0;
+    line-height: 1;
+    cursor: pointer;
+    border: 1px solid var(--line);
+    background: var(--control-grad-start);
+    color: var(--ink);
+    border-radius: 4px;
+    transition: all 0.1s;
+
+    &:hover {
+      background: var(--active-bg);
+      color: var(--active-text);
+      border-color: var(--active-border);
+    }
+  }
+
+  .group-title {
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--subtle-text);
+    letter-spacing: 0.07em;
+    line-height: 1.2;
+    padding: 3px 0px 2px 8px;
+    margin-top: 4px;
+    border-bottom: none;
+    opacity: 0.9;
+  }
+}

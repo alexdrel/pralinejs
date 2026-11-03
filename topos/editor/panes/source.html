@@ -1,0 +1,14 @@
+<header ref="{{panelToolbar}}" class="source-header">
+  <h2 class="surface-title">Source</h2>
+  <span ref="{{caretPos}}" class="caret-position">x 0, y 0</span>
+  <div class="actions">
+    <button ref="{{overwriteBtn}}" class="icon-btn toggle-btn" type="button" title="Overwrite Mode (Insert)" onClick="{{toggleOverwrite}}">
+      <span class="btn-glyph">⌖</span><span>OVR</span>
+    </button>
+  </div>
+</header>
+<section ref="{{panelBody}}" class="source-body" aria-label="Source">
+  <div class="editor">
+    <textarea id="source-input" ref="{{sourceInput}}" class="surface-mono" spellcheck="false" wrap="off"></textarea>
+  </div>
+</section>

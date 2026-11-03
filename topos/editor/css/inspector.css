@@ -1,0 +1,50 @@
+@scope (.inspector-header) {
+  .pane-head-toggle {
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  .meta {
+    min-width: 0;
+    overflow: hidden;
+    color: var(--subtle-text);
+    font-size: 10px;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+}
+
+@scope (.inspector-body) {
+  :scope {
+    padding: 7px 8px;
+  }
+
+  .block {
+    display: grid;
+    gap: 4px;
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: 68px minmax(0, 1fr);
+    gap: 8px;
+    align-items: baseline;
+    padding: 3px 2px;
+
+    .key {
+      color: var(--subtle-text);
+      font-size: 10px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .value {
+      min-width: 0;
+      overflow-wrap: anywhere;
+      color: var(--ink);
+      font-size: 11px;
+      white-space: pre-wrap;
+    }
+  }
+}

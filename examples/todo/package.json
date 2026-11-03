@@ -1,0 +1,13 @@
+{
+  "name": "praline-todo-example",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "serve": "vite",
+    "build": "vite build",
+    "check": "tsc"
+  },
+  "dependencies": {
+    "@alexdrel/pralinejs": "file:../.."
+  }
+}

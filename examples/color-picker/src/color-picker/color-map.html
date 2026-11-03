@@ -1,0 +1,11 @@
+<div class="color-map">
+  <div class="map-surface">
+    <div class="hue-ring" data-pick="hue" title="Drag around the ring to choose a hue" onPointerdown="{{pick}}" onPointermove="{{pick}}">
+      <span ref="{{hueMarker}}" class="marker"></span>
+    </div>
+    <div ref="{{plane}}" class="color-plane" data-pick="plane" title="Drag to choose saturation and value" onPointerdown="{{pick}}" onPointermove="{{pick}}">
+      <span ref="{{planeMarker}}" class="marker"></span>
+    </div>
+  </div>
+  <p class="map-hint">Hue around the ring · saturation and brightness inside</p>
+</div>

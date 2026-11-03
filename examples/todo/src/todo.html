@@ -1,0 +1,32 @@
+<main class="todo">
+  <header>
+    <p class="eyebrow">One thing at a time</p>
+    <h1>A little list.</h1>
+    <p class="intro">Make room for what you want to do next.</p>
+  </header>
+
+  <section class="list" aria-label="Tasks">
+    <form ref="{{form}}" onSubmit="{{addTask}}">
+      <label class="visually-hidden" for="new-task">New task</label>
+      <input id="new-task" ref="{{newTask}}" placeholder="What’s next?" autocomplete="off" required maxlength="200" />
+      <button type="submit" class="add">Add task <span aria-hidden="true">+</span></button>
+    </form>
+
+    <ul ref="{{taskList}}" aria-label="Your tasks">
+      <template ref="{{taskItem}}">
+        <li ref="{{item}}">
+          <label>
+            <input type="checkbox" ref="{{done}}" onChange="{{toggle}}" />
+            <span>{{title}}</span>
+          </label>
+          <button type="button" class="remove" aria-label="Delete {{title}}" onClick="{{remove}}">×</button>
+        </li>
+      </template>
+    </ul>
+
+    <p ref="{{empty}}" class="empty" hidden>Nothing on your list. Enjoy a little breathing room.</p>
+    <footer><span ref="{{remaining}}" role="status"></span><span>Small steps count.</span></footer>
+  </section>
+
+  <p class="credit">A small example of <a href="https://github.com/alexdrel/pralinejs">PralineJS</a>.</p>
+</main>

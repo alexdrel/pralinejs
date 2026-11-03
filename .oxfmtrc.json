@@ -1,0 +1,20 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "printWidth": 160,
+  "tabWidth": 2,
+  "proseWrap": "never",
+  "embeddedLanguageFormatting": "off",
+  "sortPackageJson": false,
+  "overrides": [{ "files": ["topos/editor/panes/toolbar.html"], "options": { "printWidth": 185 } }],
+  "ignorePatterns": [
+    "node_modules/**",
+    "dist/**",
+    "topos/build/**",
+    "examples/*/build/**",
+    "tmp/**",
+    "**/package-lock.json",
+    "**/*.html.ts",
+    "**/*.html.d.ts",
+    "**/*.html.js"
+  ]
+}

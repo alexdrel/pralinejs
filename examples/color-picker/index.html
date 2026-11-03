@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Color picker · PralineJS</title>
+    <link rel="stylesheet" href="./page.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <p class="eyebrow">A little Praline, anywhere</p>
+        <h1>Make it your color.</h1>
+        <p>This page owns the preview. The picker is a widget mounted into one empty element.</p>
+      </header>
+      <div class="workbench">
+        <section class="preview" id="preview">
+          <p class="eyebrow">Field notes / No. 04</p>
+          <h2>Take the<br />scenic route.</h2>
+          <p>Good things happen<br />along the way.</p>
+          <span class="preview-value" id="preview-value"></span>
+        </section>
+        <div id="picker"></div>
+      </div>
+      <div class="presets">
+        <span>Try a starting point</span>
+        <button type="button" data-color="#5979e8" style="--color: #5979e8" title="Cornflower"></button>
+        <button type="button" data-color="#26a68c" style="--color: #26a68c" title="Lagoon"></button>
+        <button type="button" data-color="#ed7699" style="--color: #ed7699" title="Rose"></button>
+      </div>
+      <footer>Native HTML page + one <a href="https://github.com/alexdrel/pralinejs">PralineJS</a> widget.</footer>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

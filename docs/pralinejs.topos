@@ -1,0 +1,20 @@
+                                                            # PralineJS
+
+                                             ╭────────╮
+                                             │ Params ├──┐
+┏━━━━━━━━━━━━━━━━━┓                          ╰────────╯  │
+┃  Authored HTML  ┠──cli/vite───╮                        │
+┗━━━━━━━━━━━━━━━━━┛             │                        │           ╭────────────╮
+                                │    ╔════════╗   ┌──────▼──────┐    │            │
+                                ◆───▶║ JsonML ╟──▶│ materialize ├───▶│ Native DOM │
+                                │    ╚════════╝   └──────┬──────┘    │            │
+┌─────────────────┐             │                        │           ╰─────▲──────╯
+│ Dynamic elements├─typed tuples╯                        │                 ┆
+└─────────────────┘                                      │    ╭────────╮   ┆
+                                                         └───▶│  Refs  ├┄┄┄┘
+                                                              ╰────────╯
+
+:legend
+%HTML%: blue
+materialize, Params, Refs: orange
+[Native DOM]: pill, green
