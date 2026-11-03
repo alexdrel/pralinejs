@@ -1,6 +1,6 @@
 {
   "name": "@alexdrel/pralinejs",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "license": "MIT",
   "author": "Alex Drel",
   "repository": {
@@ -32,7 +32,7 @@
     }
   },
   "bin": {
-    "praline": "./dist/cli.js"
+    "praline": "dist/cli.js"
   },
   "files": [
     "dist",
