@@ -1,4 +1,4 @@
-import { readFile, rm } from "node:fs/promises";
+import { readFile, realpath, rm } from "node:fs/promises";
 import { normalizePath, type Plugin, type ViteDevServer } from "vite";
 import { parseHtml, validate, emitModule, type CompileOptions, type EmitFormat, type EmitOptions } from "../compiler/index.ts";
 import { writeOutput, type UpdateMode } from "../files/output.ts";
@@ -32,13 +32,18 @@ export default function praline({
 }: PralineOptions): Plugin {
   let root: string;
   const inputs = typeof sources === "string" ? [sources] : sources;
-  let selected = new Set<string>();
+  const selected = new Map<string, string>();
   const generated = new Map<string, string>();
   let server: ViteDevServer | undefined;
 
+  async function fileIdentity(file: string) {
+    return normalizePath(await realpath(file));
+  }
+
   async function discover() {
     const result = await discoverInputs(inputs, exclude, root);
-    selected = new Set(result.files.map(normalizePath));
+    selected.clear();
+    for (const file of result.files) selected.set(await fileIdentity(file), normalizePath(file));
     return result.errors;
   }
 
@@ -61,7 +66,8 @@ export default function praline({
     if (!file.endsWith(".html")) return;
     try {
       for (const error of await discover()) server!.config.logger.error(error);
-      if (selected.has(file) && (emit !== "none" || clean)) await compile(file);
+      const source = selected.get(await fileIdentity(file));
+      if (source && (emit !== "none" || clean)) await compile(source);
     } catch (error) {
       server!.config.logger.error(error instanceof Error ? error.message : String(error));
     }
@@ -69,10 +75,13 @@ export default function praline({
 
   async function removed(file: string) {
     file = normalizePath(file);
-    selected.delete(file);
-    const output = generated.get(file);
+    const entry = [...selected].find(([identity, source]) => identity === file || source === file);
+    if (!entry) return;
+    const [identity, source] = entry;
+    selected.delete(identity);
+    const output = generated.get(source);
     if (!output) return;
-    generated.delete(file);
+    generated.delete(source);
     await rm(output, { force: true });
   }
 
@@ -85,7 +94,7 @@ export default function praline({
     async buildStart() {
       const errors = await discover();
       if (emit !== "none" || clean) {
-        for (const file of selected) {
+        for (const file of selected.values()) {
           try {
             await compile(file);
           } catch (error) {
@@ -98,7 +107,10 @@ export default function praline({
     async resolveId(source, importer, options) {
       if (!importer || options.isEntry || !source.endsWith(".html.js")) return;
       const resolved = await this.resolve(source.slice(0, -3), importer, { skipSelf: true });
-      if (resolved && selected.has(normalizePath(resolved.id))) return moduleId(normalizePath(resolved.id));
+      if (!resolved || resolved.external) return;
+      const identity = await fileIdentity(resolved.id).catch(() => undefined);
+      const file = identity && selected.get(identity);
+      if (file) return moduleId(file);
     },
     async load(id) {
       if (!id.startsWith(prefix)) return;
@@ -116,8 +128,9 @@ export default function praline({
       server.watcher.on("unlink", removed);
     },
     async handleHotUpdate(context) {
-      const file = normalizePath(context.file);
-      if (!selected.has(file)) return;
+      if (!context.file.endsWith(".html")) return;
+      const file = selected.get(await fileIdentity(context.file));
+      if (!file) return;
       const module = context.server.moduleGraph.getModuleById(moduleId(file));
       if (emit === "none" && !clean && !module) return;
       await compile(file, await context.read());

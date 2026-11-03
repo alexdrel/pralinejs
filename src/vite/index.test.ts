@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { EventEmitter } from "node:events";
-import { mkdtemp, mkdir, readFile, readdir, rm, writeFile } from "node:fs/promises";
+import { mkdtemp, mkdir, readFile, readdir, realpath, rm, symlink, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { test } from "node:test";
@@ -65,6 +65,31 @@ test("default emit none compiles selected imports on demand without writing or v
   assert.deepEqual(module.default, [["button", {}, "Go"]]);
   assert.deepEqual((await readdir(root)).sort(), ["components", "main.js"]);
   assert.deepEqual((await readdir(join(root, "components"))).sort(), ["panel.html", "unused.html"]);
+});
+
+test("selected source aliases match Vite's resolved filesystem paths", async (t) => {
+  const root = await mkdtemp(join(tmpdir(), "praline-vite-alias-"));
+  t.after(() => rm(root, { recursive: true, force: true }));
+  const actual = join(root, "actual");
+  const alias = join(root, "alias");
+  await mkdir(actual);
+  await symlink(actual, alias, "junction");
+  await writeFile(join(actual, "panel.html"), "<p>Current HTML</p>");
+  await writeFile(join(actual, "panel.html.js"), 'export default "stale generated JS";');
+  await writeFile(join(actual, "main.js"), 'export { default } from "./panel.html.js";');
+  const result = await build({
+    root: actual,
+    configFile: false,
+    logLevel: "silent",
+    plugins: [praline({ sources: alias })],
+    build: { write: false, lib: { entry: join(actual, "main.js"), formats: ["es"] } },
+  });
+  const bundle = Array.isArray(result) ? result[0] : result;
+  assert.ok("output" in bundle);
+  const chunk = bundle.output.find((item) => item.type === "chunk");
+  assert.ok(chunk?.type === "chunk");
+  const module = await import(`data:text/javascript;base64,${Buffer.from(chunk.code).toString("base64")}`);
+  assert.deepEqual(module.default, [["p", {}, "Current HTML"]]);
 });
 
 test("durable output generates unimported components and passes options through without affecting raw imports", async (t) => {
@@ -254,19 +279,28 @@ test("invalid edits preserve previous declarations and a later valid edit recove
 test("watcher additions and deletions maintain declarations, and closing removes listeners", async (t) => {
   const root = await mkdtemp(join(tmpdir(), "praline-watcher-"));
   t.after(() => rm(root, { recursive: true, force: true }));
-  const plugin = praline({ sources: "*.html", emit: "dts" });
+  const actual = join(root, "actual");
+  const alias = join(root, "alias");
+  await mkdir(actual);
+  await symlink(actual, alias, "junction");
+  const plugin = praline({ sources: alias, emit: "dts" });
   assert.ok(typeof plugin.configResolved === "function");
   plugin.configResolved.call(context, { root } as ResolvedConfig);
   const watcher = new EventEmitter();
-  const server = { watcher } as unknown as ViteDevServer;
+  const server = { watcher, moduleGraph: { getModuleById: () => undefined } } as unknown as ViteDevServer;
   assert.ok(typeof plugin.configureServer === "function");
   plugin.configureServer.call(context, server);
   assert.equal(watcher.listenerCount("add"), 1);
   assert.equal(watcher.listenerCount("unlink"), 1);
-  const added = normalizePath(join(root, "new.html"));
+  const added = normalizePath(join(await realpath(actual), "new.html"));
   await writeFile(added, '<span ref="{{label}}"></span>');
   await watcher.listeners("add")[0](added);
   assert.match(await readFile(`${added}.d.ts`, "utf8"), /label: HtmlElement<"span">/);
+  const source = '<button ref="{{label}}"></button>';
+  await writeFile(added, source);
+  assert.ok(typeof plugin.handleHotUpdate === "function");
+  await plugin.handleHotUpdate.call(context, { file: added, modules: [], server, read: async () => source } as unknown as HmrContext);
+  assert.match(await readFile(`${added}.d.ts`, "utf8"), /label: HtmlElement<"button">/);
   await rm(added);
   await watcher.listeners("unlink")[0](added);
   await assert.rejects(readFile(`${added}.d.ts`, "utf8"), { code: "ENOENT" });
