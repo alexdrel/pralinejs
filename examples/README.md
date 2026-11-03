@@ -5,4 +5,4 @@
 
 Both examples use native DOM, with no virtual DOM or diffing. Each README explains the code and includes instructions for running it.
 
-Run `npm install` and `npm run build` once at the repository root to install the shared development tools and build Praline. Each example keeps its own app dependencies and commands, using the root Vite and TypeScript installations.
+The examples are npm workspaces. Run `npm ci` and `npm run build` at the repository root to install their dependencies, link the current Praline package, and build it. One root lockfile and shared development tools cover both examples. Their commands remain separate; for example, `npm run build --workspace examples/todo` builds only Todo.

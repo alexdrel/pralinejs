@@ -148,7 +148,6 @@ Both components expose `dispose()`: unsubscribe and clear the mount's children, 
 After the [repository setup](../README.md), run from this directory:
 
 ```sh
-npm install
 npm run serve
 ```
 

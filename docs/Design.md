@@ -88,4 +88,6 @@ Runtime code and tests do not import from other project folders; external packag
 
 Runtime and tooling have separate build configurations. Tooling entrypoints share a chunk; the browser entrypoint is standalone. TypeScript emits the declaration tree separately. The Topos proving app has its own package and commands and is excluded from Praline's build and required checks.
 
+The teaching examples are npm workspaces: root installation provides their dependencies and links them to the current Praline package. They share the root lockfile and development tools while retaining their own commands. Topos stays outside the workspace. Package contents are selected explicitly, so the examples are not part of Praline's distribution.
+
 Compiler tests use synthetic HTML and small TypeScript consumers across import/embed and TS/declaration modes. Vite tests concentrate on resolution and lifecycle behavior; input and output rules are tested in their owning modules.

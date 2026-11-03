@@ -107,7 +107,6 @@ The common point is **native DOM, without virtual DOM or diffing**. `materialize
 After the [repository setup](../README.md), run from this directory:
 
 ```sh
-npm install
 npm run serve
 ```
 

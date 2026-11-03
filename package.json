@@ -11,6 +11,9 @@
     "access": "public"
   },
   "type": "module",
+  "workspaces": [
+    "examples/*"
+  ],
   "imports": {
     "#praline-types": "./src/lib/types.ts"
   },
